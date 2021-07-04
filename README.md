@@ -13,3 +13,6 @@ Simple!
 - restart lightdm with `sudo killall lightdm`. Caution! this will kill all opened applications.
 
 That's it! you'll now be using alpine-greeter as your default greeter.
+
+## How do I test it first?
+Easy! just open the HTML file in a web browser. If you want to log in, use the Bruce Wayne user with password brucew.
