@@ -1,0 +1,5 @@
+[theme]
+name=alpine
+description=AlpineJS built theme
+engine="lightdm-webkit2-greeter
+url=index.html

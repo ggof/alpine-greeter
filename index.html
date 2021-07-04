@@ -1,0 +1,61 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/basscss.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Document</title>
+</head>
+
+<body class="flex items-center justify-center">
+  <div class="flex header">
+    <div x-data="{ host: lightdm.hostname }" class="item col-4 flex justify-start items-center" , x-text="host">hostname
+    </div>
+    <div x-data="makeClock()" x-init="start" class="item col-4 flex justify-center items-center" x-text="time"></div>
+    <div class="item col-4 flex justify-end items-center">settings</div>
+  </div>
+  <div x-data="makeForm()" x-init="init()" class="modal flex flex-column justify-center items-center">
+    <div class="backdrop dark" :class="{dark: success}"></div>
+    <h1 class="h1 mb1">Welcome!</h1>
+    <h4 class="h4 mb2 error" x-show="has_error" x-text="error" x-transition:enter="enter-leave"
+      x-transition:leave="enter-leave" x-transition:enter-start="tr-start" x-transition:enter-end="tr-end"
+      x-transition:leave-start="tr-end" x-transition:leave-end="tr-start"></h4>
+
+    <form class="form" x-on:submit.prevent.stop="submit">
+      <label for="username" class="h2">Username :</label>
+      <select name="username" class="input rounded" @change="setUsername">
+        <template x-for="user in users">
+          <option x-bind:value="user.name" x-text="user.display_name" :selected="user.name === username"></option>
+        </template>
+      </select>
+      <label for="password" class="h2">Password :</label>
+      <input name="password" class="input rounded" type="password" placeholder="Password ..." x-model="password">
+      <label for="session" class="h2">Session :</label>
+      <select name="session" class="input rounded" @change="setSession">
+        <template x-for="s in sessions">
+          <option x-bind:value="s.key" x-text="s.name" :selected="s.key === session"></option>
+        </template>
+      </select>
+      <div class="flex mt1 ">
+        <div class="col-4 flex relative">
+          <button type="button" class="button bold h3 rounded px3 py1 primary" x-on:click="submit">login</button>
+        </div>
+        <div class="col-8 flex justify-end items-center">
+            <button type="button" x-show="lightdm.can_shutdown" class="icon shutdown" x-on:click="shutdown"></button>
+            <button type="button" x-show="lightdm.can_restart" class="icon reboot" x-on:click="restart"></button>
+            <button type="button" x-show="lightdm.can_hibernate" class="icon hibernate" x-on:click="hibernate"></button>
+            <button type="button" x-show="lightdm.can_suspend" class="icon suspend" x-on:click="suspend"></button>
+          <!-- TODO: add reboot options here -->
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script src="js/mock.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/alpine_3-2-1.min.js"></script>
+</body>
+
+</html>
